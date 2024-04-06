@@ -45,13 +45,13 @@ class MockDatabase:
         self.contests = []
         self.notes = {}
 
-    async def add_contest(self, contest):
+    async def add_contest(contest):
         self.contests.append(contest)
 
-    async def get_contests(self):
+    async def get_contests():
         return self.contests
 
-    async def get_problem(self):
+    async def get_problem():
         # This is a placeholder function to demonstrate the concept
         # You should replace this with your actual implementation
         leetcode_problems = [
@@ -79,7 +79,6 @@ class MockDatabase:
     async def recommend_note(self, note_name):
         return self.notes.get(note_name, "Note not found.")
 
-database = MockDatabase()
 
 # Command to open PyTutor website
 @bot.command("visualise")
@@ -104,7 +103,7 @@ async def announce_contest(ctx, platform: str, contest_name: str, start_time: st
 @bot.command(name="give_problem")
 async def problem_of_the_day(ctx):
     """Send the problem of the day."""
-    problem = await database.get_problem()
+    problem = await MockDatabase.get_problem()
     problem_message = f"*Problem of the Day*\n\nTitle: {problem['title']}\nDescription: {problem['description']}\n[Link to Problem]({problem['link']})"
     await ctx.send(problem_message)
 BASE_URL = "https://api.github.com"
@@ -147,14 +146,14 @@ async def askai(ctx: commands.Context, *, prompt: str):
 @bot.command(name="upload_note")
 async def upload_note(ctx, note_name: str, note_link: str):
     """Upload a PDF note."""
-    await database.upload_note(note_name, note_link)
+    await MockDatabase.upload_note(note_name, note_link)
     await ctx.send(f"Note '{note_name}' uploaded successfully.")
 
 # Command to recommend a note
 @bot.command(name="recommend_note")
 async def recommend_note(ctx, note_name: str):
     """Recommend a stored note."""
-    note_link = await database.recommend_note(note_name)
+    note_link = await MockDatabase.recommend_note(note_name)
     if note_link != "Note not found.":
         await ctx.send(f"Here's the link for '{note_name}': {note_link}")
     else:
