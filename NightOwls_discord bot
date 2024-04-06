@@ -735,4 +735,4 @@ async def on_ready():
     print(f"Logged in as: {bot.user.name}!")
 
 # Run the bot
-bot.run("MTIyNTg4NTUwMTk5MTU1MTA0Ng.Gup7eE.DK852szVd72OwunFsQTY7btacxLTeFqQj0AIyU")
+bot.run("")
