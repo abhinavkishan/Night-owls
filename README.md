@@ -14,8 +14,9 @@
 - To solve their doubt with the help of a generative AI which can answer any sort of question.
 - Announce coding contests and create dedicated channels for contests.
 - Provide and solve coding problems sourced from platforms like LeetCode and Codeforces.
+- To facilitate user to learn via repl sessions.
 - Support code submission, review, and collaboration within Discord.
-- Offer features such as note uploading, recommendation, GitHub and YouTube search, and code execution.
+- Offer features such as note uploading, recommendation,search on stackoverflow or AI chatbot, GitHub and YouTube search, and code execution.
 
 ## 4) Features
 **a) Coding Contest Management:**  
