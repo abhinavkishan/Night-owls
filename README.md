@@ -3,7 +3,7 @@
 1) Track - Discord Bot
    Contributors - Sreekantam Sai Venkat (IMT2023501) , Abhinav Kishan (IMT2023580) , Pammi Nanda Mitra (IMT2023583)
 
-2) Problem Statement - 
+2) Problem Statement - Creating a Discord bot involves designing and implementing various features and functionalities to enhance the user experience within a Discord server.
 
 3) Goal - The goal is to create a versatile Discord bot that enables users to:
                 - Announce coding contests and create dedicated channels for contests.
@@ -16,8 +16,15 @@
 
 
 
+5) Tech Stack -
+            - *Discord.py*: Library for creating Discord bots in Python.
+            - *Python*: Programming language used for bot development.
+            - *requests*: HTTP library for making API requests.
+            - *Beautiful Soup (bs4)*: Library for web scraping.
+            - *google.generativeai (gemini-pro)*: Library for AI text generation.
+            - *Other Python libraries*: speech_recognition, gtts (Google Text-to-Speech)
 
-
+6) 
 
 
 7) Deployment (if Done)-
