@@ -11,6 +11,7 @@
 
 ## 3) Goal
 **The goal is to create a versatile Discord bot that enables users to:**
+- To solve their doubt with the help of a generative AI which can answer any sort of question.
 - Announce coding contests and create dedicated channels for contests.
 - Provide and solve coding problems sourced from platforms like LeetCode and Codeforces.
 - Support code submission, review, and collaboration within Discord.
