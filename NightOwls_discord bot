@@ -11,7 +11,7 @@ import speech_recognition as sr
 from gtts import gTTS
 import os
 bot = commands.Bot(command_prefix=">", intents=discord.Intents.all())
-API_KEY="IzaSyDSAbwp8eh6Y26nwbVFuTUudcOnrUBPLGw"
+API_KEY="PUT_YOUR_GEMINI_API_KEY"
 # Initialize generative AI model
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-pro',
@@ -143,6 +143,7 @@ async def github_search(ctx, query: str):
 async def askai(ctx: commands.Context, *, prompt: str):
     response = model.generate_content(prompt)
     await ctx.reply(response.text)
+#command to upload notes
 @bot.command(name="upload_note")
 async def upload_note(ctx, note_name: str, note_link: str):
     """Upload a PDF note."""
@@ -158,6 +159,7 @@ async def recommend_note(ctx, note_name: str):
         await ctx.send(f"Here's the link for '{note_name}': {note_link}")
     else:
         await ctx.send("Note not found.")
+#command to do a youtube search
 @bot.command(name="youtube_search")
 async def youtube_search(ctx, *, query: str):
     """Search YouTube for the given query."""
@@ -165,7 +167,7 @@ async def youtube_search(ctx, *, query: str):
     youtube_url = f"https://www.youtube.com/results?search_query={search_query}"
     await ctx.send(f"Here's the YouTube search results for '{query}':\n{youtube_url}")
 ongoing_contests = {}
-
+#command to compete with friends
 @bot.command(name="compete")
 async def compete(ctx, channel: discord.TextChannel, contest_name: str):
     """Start a coding contest in the specified channel."""
@@ -191,7 +193,7 @@ async def compete(ctx, channel: discord.TextChannel, contest_name: str):
             await ctx.send(f"{partner.mention} did not accept the challenge. Contest canceled.")
     except TimeoutError:
         await ctx.send("No one responded. Contest canceled.")
-
+#command to check whether 
 @bot.command(name="check")
 async def show_ongoing_contests(ctx):
     """Show ongoing contests."""
@@ -241,7 +243,7 @@ class Contest:
         return sorted_leaderboard
 
 contests = {}
-
+#command to start_contest
 @bot.command(name="start_contest")
 async def start_contest(ctx, contest_name: str, duration_minutes: int, *problem_ids: str):
     """Start a coding contest."""
@@ -312,6 +314,7 @@ async def check_contest_timers():
                 await channel.send("The contest is over.")
             del contests[contest_name]
             await end_contest(contest.ctx, contest_name)
+#command to end_contest
 @bot.command(name="endcontest")
 @commands.has_permissions(administrator=True)  # Ensure only admins can end the contest
 async def end_contest(ctx, contest_name: str):
@@ -329,6 +332,7 @@ async def end_contest(ctx, contest_name: str):
     await ctx.send(f"The contest '{contest_name}' has ended. Thanks for participating!\n{leaderboard_message}")
 
 # Event handler for bot's on_ready event
+#command to give_problem_on
 @bot.command(name="give_problems_on")
 async def recommend_leetcode(ctx, query: str):
     """Recommend LeetCode problems based on the given query."""
@@ -367,7 +371,7 @@ def get_recommendations(username):
 
 
 code_reviews = {}
-
+#command to submit_code_for_analysis
 @bot.command(name="submit_code")
 async def submit_code(ctx, *, code: str):
     """Submit code for review."""
@@ -377,7 +381,7 @@ async def submit_code(ctx, *, code: str):
     else:
         code_reviews[user_id] = code
         await ctx.send("Your code has been submitted for review. Please wait for feedback.")
-
+#command for reviewing_code
 @bot.command(name="review_code")
 async def review_code(ctx, user: discord.User):
     """Review submitted code."""
@@ -390,6 +394,7 @@ async def review_code(ctx, user: discord.User):
         code = code_reviews[user.id]
         await ctx.send(f"Here's the code submitted by {user.mention} for review:\n{code}")
         await ctx.send(f"{ctx.author.mention}, please provide feedback on the code.")
+#command for collaborating with replit
 @bot.command(name="collaborate")
 async def collaborate(ctx):
     """Start a collaborative coding session using Repl.it."""
@@ -405,6 +410,7 @@ async def collaborate(ctx):
         await ctx.send(repl_link)
     else:
         await ctx.send("Failed to generate collaboration link. Please try again later.")
+#command to run code
 @bot.command(name="runcode")
 async def run_code(ctx, language: str, *, code: str):
     """Compile and execute code."""
@@ -447,6 +453,7 @@ async def run_code(ctx, language: str, *, code: str):
             await ctx.send("Unknown error occurred.")
     else:
         await ctx.send("Failed to execute code. Please try again later.")
+#command for maintaing leetcode_profile
 @bot.command("leetcode_profile")
 async def leetcode_profile(ctx, username: str):
   """Display LeetCode profile information."""
@@ -526,7 +533,7 @@ async def assign_badges_command(ctx):
   guild = ctx.guild
   await assign_badges_from_leaderboard(guild)
   await ctx.send("Badges or stickers assigned based on the leaderboard.")
-
+#command to give problems from leetcode
 @bot.command("recommend_problems")
 async def recommend_problems(ctx, username: str):
   """Recommend next problems to solve based on LeetCode profile."""
@@ -633,7 +640,7 @@ class Game:
                   await self.channel.send(f"{player.mention} wins the bronze medal!")
           else:
               await self.channel.send("Incorrect answer or unauthorized player.")
-
+#command to create game
 @bot.command(name="create_game")
 async def create_game(ctx, opponent: discord.Member):
   """Create a new channel for a coding competition or quiz between the user and their opponent."""
@@ -686,7 +693,7 @@ class Database:
         self.ratings[user] = new_rating
 
 database = Database()
-
+#command to solve challenge problems
 @bot.command(name="challenge_problems")
 async def challenge_problems(ctx):
     """Display the list of challenge problems."""
@@ -706,13 +713,14 @@ async def solve_problem(ctx, problem_name: str):
         await ctx.send(f"{ctx.author.mention} solved {problem_name} and gained {problem_rating} rating points! Your new rating is {new_rating}.")
     else:
         await ctx.send("Invalid problem name.")
-
+#command to see leaderboard 
 @bot.command(name="leaderboard")
 async def leaderboard(ctx):
     """Display the server's leaderboard."""
     ratings = sorted(database.ratings.items(), key=lambda x: x[1], reverse=True)
     leaderboard = "\n".join([f"{idx+1}. {user}: {rating} rating" for idx, (user, rating) in enumerate(ratings)])
     await ctx.send(f"*Leaderboard:*\n{leaderboard}")
+#command to search query on stackoverflow
 @bot.command(name="stackoverflow")
 async def stackoverflow_search(ctx, *, query: str):
   """Search Stack Overflow for the given query."""
@@ -724,6 +732,7 @@ async def stackoverflow_search(ctx, *, query: str):
       await ctx.send(response_message)
   else:
       await ctx.send("No results found on Stack Overflow.")
+#command to creat an invite link for server
 @bot.command(name="invite_link")
 async def server_invite(ctx):
     """Generate an invite link for the server."""
